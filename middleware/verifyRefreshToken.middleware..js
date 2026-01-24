@@ -1,17 +1,14 @@
-const express = require("express");
 var jwt = require("jsonwebtoken");
-const { ACCESS_SECRET_KEY } = process.env;
+const { REFRESH_SECRET_KEY } = process.env;
 
-const verrifyRefreshToken = async (req, res, next) => {
-  const {refreshToken} = req.cookies
+const verrifyRefreshToken = (refreshToken) => {
   try {
-    jwt.verify(refreshToken, ACCESS_SECRET_KEY);
-    next()
+    const decode = jwt.verify(refreshToken, REFRESH_SECRET_KEY);
+    return decode.name;
   } catch (error) {
-    return res.status(403).json({
-      success: false,
-      message: "Invalid or expired token",
-    });
+    console.log(error);
+
+    return null;
   }
 };
 

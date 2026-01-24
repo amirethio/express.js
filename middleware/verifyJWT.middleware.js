@@ -4,7 +4,6 @@ const { ACCESS_SECRET_KEY } = process.env;
 
 const verifyJWT = (req, res, next) => {
   const accessToken = req.headers.authorization?.split(" ")[1];
-
   jwt.verify(accessToken, ACCESS_SECRET_KEY, (err, decoded) => {
     if (err) {
       if ("jwt expired" === err.message) {
