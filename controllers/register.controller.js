@@ -1,13 +1,13 @@
+const fsPromise = require("fs").promises;
+const path = require("path");
+const bcrypt = require("bcrypt");
+
 const userDb = {
   users: require("./../model/users.json"),
   setUser: function (data) {
     this.users = data;
   },
 };
-
-const fsPromise = require("fs").promises;
-const path = require("path");
-const bcrypt = require("bcrypt");
 
 const newUserHandler = async (req, res) => {
   const { userName, password } = req.body;
@@ -45,6 +45,8 @@ const newUserHandler = async (req, res) => {
       path.join(__dirname, "..", "model", "users.json"),
       JSON.stringify(userDb.users),
     );
+
+    
     res.status(201).json({
       success: true,
       message: "registered sucessfully",
