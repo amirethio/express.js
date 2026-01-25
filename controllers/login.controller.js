@@ -44,13 +44,13 @@ const loginUser = async (req, res) => {
       name: userName,
     };
     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-      expiresIn: "30s",
+      expiresIn: "15m",
     });
     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
       expiresIn: "1d",
     });
 
-    
+
     const otherUser = userDb.users.filter((data) => data.user !== userName);
     const currentUser = { ...userExist, refreshToken };
     userDb.setUser([...otherUser, currentUser]);

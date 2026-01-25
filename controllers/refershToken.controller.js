@@ -12,6 +12,8 @@ const handleRefershToken = (req, res) => {
       .status(401)
       .json({ success: false, message: "Refresh token missing" });
   }
+  
+  
   const userName = verrifyRefreshToken(refreshToken);
 
   if (!userName) {
@@ -20,7 +22,7 @@ const handleRefershToken = (req, res) => {
       message: "Invalid or expired token",
     });
   } else {
-    const userExist = userData.users.find((data) => data.user === userName);
+    const userExist = userData.find((data) => data.user === userName);
     if (!userExist) {
       return res.status(404).json({
         success: false,
@@ -32,7 +34,7 @@ const handleRefershToken = (req, res) => {
     };
 
     try {
-      const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "30s" });
+      const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "15s" });
       res.status(200).json({
         success: true,
         message: "new toekn issued",
